@@ -1,2 +1,6 @@
 v 1.0.0:
 - Initial release
+
+v 1.0.3:
+- Fixed issue with video playing underneath info window.
+- Added play all option to list.

@@ -32,7 +32,7 @@ title provided by the filename.  Then it will trigger a library update so that t
 ### XBMC File Exclusions
 Since these are video files sprinkled in among all of your other video files we need to tell the xbmc scanner to ignore these files.  If we don't then the scanner will try and match
 them up with one of the online sites and you probably won't be happy with the results.  To do this we just need to add some new regular expressions to the [advanced settings](http://wiki.xbmc.org/index.php?title=Advancedsettings.xml).
-These are the settings that I added.
+These are the settings that I added.  It is recommended to add these settings and reboot xbmc for them to take effect before adding the files to your library so the scanner doesn't try to parse them.
 ```xml
 <video>
   <excludefromscan>

@@ -39,9 +39,20 @@ class DvdExtras(xbmcgui.Window):
         return results
 
     def showList(self, list):
+        addPlayAll = len(list) > 1
+        if addPlayAll:
+            list.insert(0, ("PlayAll", "Play All") )
         select = xbmcgui.Dialog().select('DVD Extras', [name[1].replace(".sample","").replace("&#58;", ":") for name in list])
         if select != -1:
-            xbmc.Player( xbmc.PLAYER_CORE_MPLAYER ).play( list[select][0] )
+            xbmc.executebuiltin("Dialog.Close(all, true)") 
+            if select == 0 and addPlayAll == True:
+                playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+                playlist.clear()
+                for item in list:
+                    playlist.add( item[0] )
+                xbmc.Player( xbmc.PLAYER_CORE_MPLAYER ).play( playlist )
+            else:
+                xbmc.Player( xbmc.PLAYER_CORE_MPLAYER ).play( list[select][0] )
         
     def showError(self):
         xbmcgui.Dialog().ok("Info", "No extras found")
