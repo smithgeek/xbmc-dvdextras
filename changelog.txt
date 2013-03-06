@@ -4,3 +4,6 @@ v 1.0.0:
 v 1.0.3:
 - Fixed issue with video playing underneath info window.
 - Added play all option to list.
+
+v 1.0.4
+- Changed list name from "Dvd Extras" to just "Extras"

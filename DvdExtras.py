@@ -42,7 +42,7 @@ class DvdExtras(xbmcgui.Window):
         addPlayAll = len(list) > 1
         if addPlayAll:
             list.insert(0, ("PlayAll", "Play All") )
-        select = xbmcgui.Dialog().select('DVD Extras', [name[1].replace(".sample","").replace("&#58;", ":") for name in list])
+        select = xbmcgui.Dialog().select('Extras', [name[1].replace(".sample","").replace("&#58;", ":") for name in list])
         if select != -1:
             xbmc.executebuiltin("Dialog.Close(all, true)") 
             if select == 0 and addPlayAll == True:
@@ -139,7 +139,7 @@ class DvdExtras(xbmcgui.Window):
 
     def createNfos(self):
         progressDialog = xbmcgui.DialogProgress()
-        progressDialog.create( "Dvd Extras", "Searching for files" )
+        progressDialog.create( "Extras", "Searching for files" )
         pendingFiles = self.getExtraNfoFiles( self.get_movie_sources() )
         pattern = "-extras-nfo-"
         current = 0
@@ -164,7 +164,7 @@ class DvdExtras(xbmcgui.Window):
         progressDialog.close()
         if current > 0:
             xbmc.executebuiltin("UpdateLibrary(video)") 
-        xbmcgui.Dialog().ok("Dvd Extras", "Finished scan")
+        xbmcgui.Dialog().ok("Extras", "Finished scan")
     
 extras = DvdExtras()
 if len(sys.argv) > 1:
