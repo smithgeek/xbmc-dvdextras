@@ -63,3 +63,11 @@ file that needs modified is DialogVideoInfo.xml.  This is the code I added to th
 ### Other
 After playing around with the script I decided that I personally liked having extras that appeared at the end of a Season to appear in the format "Bonus: Behind the Scenes". Since
 adding a colon in a filename can be a problem the script supports the html code &amp;#58; for colon.  So if you create a file with that code in it it will display as a colon in the UI.
+
+### Theme music
+If you would like to play music when viewing movie information just add a theme.mp3 file to your movie folder.  You also must update your skin's DialogVideoInfo.xml file to include these two
+commands.  This will only play music for movies so that it does not interfere with the TvTunes addon.
+```xml
+<onload condition="System.HasAddon(script.dvdextras) + Container.Content(movies)">XBMC.RunScript(script.dvdextras,$INFO[ListItem.FilenameAndPath],start_theme)</onload>
+<onunload condition="System.HasAddon(script.dvdextras) + Container.Content(movies)">XBMC.RunScript(script.dvdextras,stop_theme)</onunload>
+```

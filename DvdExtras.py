@@ -15,7 +15,7 @@
 # *
 import xbmc, xbmcgui, sys, os, re, xbmcvfs
 
-LOG_ENABLED = False
+LOG_ENABLED = True
 def log(msg):
     if LOG_ENABLED:
         print "DvdExtras : " + msg
@@ -168,9 +168,21 @@ class DvdExtras(xbmcgui.Window):
     
 extras = DvdExtras()
 if len(sys.argv) > 1:
-    log( "finding extras for " + sys.argv[1] )
-    path = sys.argv[1]
-    extras.findExtras(path)
+    if sys.argv[1] == "stop_theme":
+        log( "Stopping music" )
+        xbmc.Player().stop()
+    else:
+        path = sys.argv[1]
+        if len(sys.argv) > 2 and sys.argv[2] == "start_theme":
+            log( "starting music" )
+            directory = os.path.dirname(path)
+            themeMusic = os.path.join( directory, "theme.mp3" )
+            if xbmcvfs.exists( themeMusic ):
+                log( "Playing " + themeMusic )
+                xbmc.Player().play( themeMusic )
+        else:
+            log( "finding extras for " + sys.argv[1] )
+            extras.findExtras(path)
 else:
     log( "creating Nfo files" )
     extras.createNfos()

@@ -7,3 +7,9 @@ v 1.0.3:
 
 v 1.0.4
 - Changed list name from "Dvd Extras" to just "Extras"
+
+v 1.0.8
+- Added support for playing a theme.mp3 file when viewing the DialogVideoInfo.xml window.
+    To add this support to your skin add the following commands at the top of your DialogVideoInfo.xml file.
+    <onload condition="System.HasAddon(script.dvdextras) + Container.Content(movies)">XBMC.RunScript(script.dvdextras,$INFO[ListItem.FilenameAndPath],start_theme)</onload>
+    <onunload condition="System.HasAddon(script.dvdextras) + Container.Content(movies)">XBMC.RunScript(script.dvdextras,stop_theme)</onunload>
