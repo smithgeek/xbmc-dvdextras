@@ -13,9 +13,9 @@
 # *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 # *  http://www.gnu.org/copyleft/gpl.html
 # *
-import xbmc, xbmcgui, sys, os, re, xbmcvfs
+import xbmc, xbmcgui, sys, os, re, xbmcvfs, xbmcaddon
 
-LOG_ENABLED = True
+LOG_ENABLED = False
 def log(msg):
     if LOG_ENABLED:
         print "DvdExtras : " + msg
@@ -45,14 +45,18 @@ class DvdExtras(xbmcgui.Window):
         select = xbmcgui.Dialog().select('Extras', [name[1].replace(".sample","").replace("&#58;", ":") for name in list])
         if select != -1:
             xbmc.executebuiltin("Dialog.Close(all, true)") 
+            xbmcaddon.Addon().setSetting("themeMusicIsPlaying", "false")
+            xbmc.Player().stop()
             if select == 0 and addPlayAll == True:
                 playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
                 playlist.clear()
                 for item in list:
+                    log( "Start playing " + item[0] )
                     playlist.add( item[0] )
-                xbmc.Player( xbmc.PLAYER_CORE_MPLAYER ).play( playlist )
+                xbmc.Player().play( playlist )
             else:
-                xbmc.Player( xbmc.PLAYER_CORE_MPLAYER ).play( list[select][0] )
+                log( "Start playing " + list[select][0] )
+                xbmc.Player().play( list[select][0] )
         
     def showError(self):
         xbmcgui.Dialog().ok("Info", "No extras found")
@@ -169,17 +173,21 @@ class DvdExtras(xbmcgui.Window):
 extras = DvdExtras()
 if len(sys.argv) > 1:
     if sys.argv[1] == "stop_theme":
-        log( "Stopping music" )
-        xbmc.Player().stop()
+        if xbmcaddon.Addon().getSetting("themeMusicEnabled") == "true" and xbmcaddon.Addon().getSetting("themeMusicIsPlaying") == "true":
+            log( "Stopping music" )
+            xbmcaddon.Addon().setSetting("themeMusicIsPlaying", "false")
+            xbmc.Player().stop()
     else:
         path = sys.argv[1]
         if len(sys.argv) > 2 and sys.argv[2] == "start_theme":
-            log( "starting music" )
-            directory = os.path.dirname(path)
-            themeMusic = os.path.join( directory, "theme.mp3" )
-            if xbmcvfs.exists( themeMusic ):
-                log( "Playing " + themeMusic )
-                xbmc.Player().play( themeMusic )
+            if xbmcaddon.Addon().getSetting("themeMusicEnabled") == "true":
+                log( "starting music" )
+                directory = os.path.dirname(path)
+                themeMusic = os.path.join( directory, "theme.mp3" )
+                if xbmcvfs.exists( themeMusic ):
+                    log( "Playing " + themeMusic )
+                    xbmcaddon.Addon().setSetting("themeMusicIsPlaying", "true")
+                    xbmc.Player().play( themeMusic )
         else:
             log( "finding extras for " + sys.argv[1] )
             extras.findExtras(path)

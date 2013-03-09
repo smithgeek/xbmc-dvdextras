@@ -1,0 +1,4 @@
+<settings>
+   <setting id="themeMusicEnabled" type="bool" label="Play theme music when viewing movie info." default="true"/>
+   <setting id="themeMusicIsPlaying" type="bool" visible="false" default="false"/>
+</settings>
