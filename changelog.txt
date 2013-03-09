@@ -15,5 +15,7 @@ v 1.0.8
     <onunload condition="System.HasAddon(script.dvdextras) + Container.Content(movies)">XBMC.RunScript(script.dvdextras,stop_theme)</onunload>
 
 v 1.0.9
-- Added setting for playing theme.mp3 when viewing video information.
 - Fixed bug where Extras videos would not play after being selected.
+
+v 1.0.10
+- Added setting for playing theme.mp3 when viewing video information.
