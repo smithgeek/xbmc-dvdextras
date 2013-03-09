@@ -13,13 +13,16 @@ For the script to find your files you must follow a specific naming convention. 
 
 #### Extras Folder
 If you put all of your movies in their own folder you can simply add an "Extras" sub folder and add all of
-your bonus content in that directory.  The script will simply display the filename (without extension) in the UI. 
+your bonus content in that directory.  The script will simply display the filename (without extension) in the UI. By default the list of videos
+will appear in alphabetical order.  If you would like to specify a custom order just start the filename with brackets containing the text to sort on.
+For example you could create files "[0]Deleted Scenes.mkv", "[1]Bloopers.mkv", and "[2]Behind The Scenes.mkv".  In this case instead of sorting on the name
+it will sort on the numbers.  The bracket portion of the filename will not be displayed in the UI.  
 
 #### Same Directory
 If for some reason you don't want to create an Extras folder or you want to associate a bonus feature with a specific tv show episode there is an alternative naming convention.
 Simply use the same name as the file you want to associate the extra feature with and then append "-extras-Display name here".  So if you wanted to associate an Extended Pilot feature
 with the first episode of a tv show named "s1e1.mkv", you would create a file name "s1e1-extras-Extended Pilot.mkv".  When the script displays this file in the UI it will strip out all the
-extra stuff and just show "Extended Pilot".
+extra stuff and just show "Extended Pilot". To customize the order here you can use the same format as the extras folder.  Example: "s1e1-extras-[99]Extended Pilot.mkv"
 
 #### Tv Show Season Features
 Some Dvd extra features for TV shows don't really go with a specific episode and instead just belong to a season.  In this case what I do is just create fake episodes at the end of the

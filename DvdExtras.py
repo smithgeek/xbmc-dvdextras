@@ -41,8 +41,8 @@ class DvdExtras(xbmcgui.Window):
     def showList(self, list):
         addPlayAll = len(list) > 1
         if addPlayAll:
-            list.insert(0, ("PlayAll", "Play All") )
-        select = xbmcgui.Dialog().select('Extras', [name[1].replace(".sample","").replace("&#58;", ":") for name in list])
+            list.insert(0, ("PlayAll", "Play All", "Play All") )
+        select = xbmcgui.Dialog().select('Extras', [name[2].replace(".sample","").replace("&#58;", ":") for name in list])
         if select != -1:
             xbmc.executebuiltin("Dialog.Close(all, true)") 
             xbmcaddon.Addon().setSetting("themeMusicIsPlaying", "false")
@@ -61,6 +61,15 @@ class DvdExtras(xbmcgui.Window):
     def showError(self):
         xbmcgui.Dialog().ok("Info", "No extras found")
 
+    def getOrderAndDisplay(self, displayName):
+        result = ( displayName, displayName )
+        match = re.search("^\[(?P<order>.+)\](?P<Display>.*)", displayName)
+        if match:
+            orderKey = match.group('order')
+            if orderKey != "":
+                result = ( orderKey, match.group('Display') )
+        return result
+        
     def getExtrasDirFiles(self, filepath):
         basepath = os.path.dirname( filepath )
         extrasDir = basepath + "/Extras/"
@@ -71,7 +80,8 @@ class DvdExtras(xbmcgui.Window):
             for filename in files:
                 log( "found file: " )
                 log( filename[0] )
-                extras.append( ( extrasDir + filename, os.path.splitext(filename)[0] ) )
+                orderDisplay = self.getOrderAndDisplay( os.path.splitext(filename)[0] )
+                extras.append( ( extrasDir + filename, orderDisplay[0], orderDisplay[1] ) )
         return extras
         
     def getExtrasFiles(self, filepath):
@@ -85,7 +95,8 @@ class DvdExtras(xbmcgui.Window):
             if m:
                 path = os.path.join( directory, file )
                 displayName = os.path.splitext(file[len(pattern):])[0]
-                extras.append( ( path, displayName ) )
+                orderDisplay = self.getOrderAndDisplay( displayName )
+                extras.append( ( path, orderDisplay[0], orderDisplay[1]  ) )
                 log( "Found extras file: " + path + ", " + displayName )
         return extras
 
