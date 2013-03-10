@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.dvdextras"
        name="Dvd Extras"
-       version="1.0.11"
+       version="1.1.0"
        provider-name="smithgeek">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -11,7 +11,7 @@
   <extension point="xbmc.python.library" library="DvdExtras.py" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Add DVD extras to your movies and TV shows.</summary>
-    <description lang="en">Provides a way to add DVD extras to your video library.</description>
+    <description lang="en">Provides a way to add DVD extras to your video library. Look at the readme for setup instructions. https://github.com/brentosmith/xbmc-dvdextras</description>
     <platform>all</platform>
   </extension>
 </addon>

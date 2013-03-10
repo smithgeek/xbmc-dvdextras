@@ -1,4 +1,6 @@
 <settings>
    <setting id="themeMusicEnabled" type="bool" label="Play theme music when viewing movie info." default="true"/>
-   <setting id="themeMusicIsPlaying" type="bool" visible="false" default="false"/>
+   <setting id="themeMusicState" type="labelenum" visible="false" values="STOPPED|PLAYING|FADE_IN|FADE_OUT" default="STOPPED"/>
+   <setting id="restoreVolume" type="label" visible="false" default="100"/>
+   <setting id="themeRandomStart" type="bool" label="Choose a random starting point for theme music." default="true"/>
 </settings>

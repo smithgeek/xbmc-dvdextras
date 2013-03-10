@@ -74,3 +74,17 @@ commands.  This will only play music for movies so that it does not interfere wi
 <onload condition="System.HasAddon(script.dvdextras) + Container.Content(movies)">XBMC.RunScript(script.dvdextras,$INFO[ListItem.FilenameAndPath],start_theme)</onload>
 <onunload condition="System.HasAddon(script.dvdextras) + Container.Content(movies)">XBMC.RunScript(script.dvdextras,stop_theme)</onunload>
 ```
+#### Customizing theme music
+You can actually add more than one theme song for a movie just make sure they all start with theme.  So something like "theme.mp3", "theme1.mp3", or "themeAntyhingCanGoHere.mp3".
+If multiple mp3 files are found the script will randomly pick one to start with and if that song finishes it will go on to the next song.  There is also a configurable option to 
+select a random start point.  That way you won't always here the same bit of music each time you view the info screen.  You can also manually set start points for a song in case there
+are a few passages in a song you really like.  To do this just specify the number of seconds where the song should start.  If multiple start points are given the scrit will randomly
+pick one.
+
+theme[10].mp3 - Song will start playing at the 10 second mark
+
+theme[10,152].mp3 - Song will start playing at either 10 seconds or 152 seconds
+
+theme[10,152,random].mp3 - Song will start playing at either 10 seconds, 152 seconds, or a random location
+
+If this format is used on a file it will override the global random start configuration for this specific file.
