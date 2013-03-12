@@ -27,3 +27,7 @@ v 1.1.0
 - Added support for multiple theme files, they all just have to start with theme.
 - Added support for using a random start point for theme music playback.
 - Manual start points can be specified in the filename, see readme for exact instructions.
+
+v 1.1.1
+- Added a tool to search the movie database for files containing a given string and remove them from the database.  To help erroneous trailers and extras accidentally added to database.
+- Fixed a few bugs related to theme music playback and volume control.

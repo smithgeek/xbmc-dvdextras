@@ -14,6 +14,10 @@
 # *  http://www.gnu.org/copyleft/gpl.html
 # *
 import xbmc, xbmcgui, sys, os, re, xbmcvfs, xbmcaddon, random
+if sys.version_info < (2, 7):
+    import simplejson
+else:
+    import json as simplejson
 
 LOG_ENABLED = False
 def log(msg):
@@ -104,18 +108,20 @@ class Player():
     def stop( self ):
         log( "Stopping xbmc player" )
         music.setStopped()
-        xbmc.Player().stop()
+        if xbmc.Player().isPlayingAudio():
+            xbmc.Player().stop()
         
     def fadeOut( self ):
         if music.isPlaying():
             music.setRestoreVolume( self.getVolume() )
-        music.setFadeOut()
-        if self.fade( 1, 10, "FADE_OUT" ):
-            self.stop()
-            # wait till player is stopped before raising the volume
-            while xbmc.Player().isPlaying():
-                xbmc.sleep(50)
-            self.setVolume( music.getRestoreVolume() )
+        if not music.isStopped() and xbmc.Player().isPlayingAudio():
+            music.setFadeOut()
+            if self.fade( 1, 10, "FADE_OUT" ):
+                self.stop()
+                # wait till player is stopped before raising the volume
+                while xbmc.Player().isPlaying():
+                    xbmc.sleep(50)
+                self.setVolume( music.getRestoreVolume() )
 
     def createPlaylist(self, files ):
         playlist = xbmc.PlayList(xbmc.PLAYLIST_MUSIC)
@@ -372,5 +378,60 @@ if len(sys.argv) > 1:
             log( "finding extras for " + sys.argv[1] )
             extras.findExtras(path)
 else:
-    log( "creating Nfo files" )
-    extras.createNfos()
+    options = ['Create NFO files for TV Show extras', 'Search for movies to remove from database']
+    command = xbmcgui.Dialog().select('Select command', options)
+    if( command == 0 ):
+        log( "creating Nfo files" )
+        extras.createNfos()
+    elif( command == 1 ):
+        xbmcgui.Dialog().ok('Instructions','1. Enter search string at keyboard', '2. Preview files: Select a file to remove it from the list', '3. Select continue and then confirm deletion')
+        keyboard = xbmc.Keyboard()
+        keyboard.doModal()
+        if( keyboard.isConfirmed() ):
+            searchText = keyboard.getText()
+            dialog = xbmcgui.DialogProgress()
+            dialog.create("Scanning database...")
+            json_query = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "VideoLibrary.GetMovies", "params": {"properties": ["file"]}, "id": 1}')
+            json_query = unicode(json_query, 'utf-8', errors='ignore')
+            json_response = simplejson.loads(json_query)
+            filenames = ['Continue...']
+            movieIds = [-1]
+            if (json_response['result'] != None) and (json_response['result'].has_key('movies')):
+                total = len(json_response['result']['movies'])
+                count = 0
+                for item in json_response['result']['movies']:
+                    count += 1
+                    if searchText in item['file']:
+                        dialog.update(int(count / total))
+                        filenames.append( os.path.basename( item['file'] ) + " - " + item['file'] )
+                        movieIds.append( item['movieid'] )
+                dialog.close()
+                select = -1
+                while( select != 0 and len(movieIds) > 1 ):
+                    select = xbmcgui.Dialog().select('Preview: Select file to remove', filenames)
+                    if( select == -1 ):
+                        movieIds = []
+                        break
+                    if( select != 0 ):
+                        filenames.pop( select )
+                        movieIds.pop( select )
+                if( len( movieIds ) > 1 ):
+                    if( xbmcgui.Dialog().yesno('Alert', "Remove selected files from database?", "Warning: This can't be undone!") ):
+                        for myId in movieIds:
+                            if( myId != -1 ):
+                                delete_query = '{"jsonrpc": "2.0", "method": "VideoLibrary.RemoveMovie", "params": { "movieid":%d }, "id": 1}' % myId
+                                xbmc.executeJSONRPC( delete_query )
+                        xbmcgui.Dialog().ok('Info', "Files have been removed.")
+                else:
+                    xbmcgui.Dialog().ok('Info', 'No files to remove')
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
