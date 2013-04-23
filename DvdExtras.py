@@ -19,9 +19,8 @@ if sys.version_info < (2, 7):
 else:
     import json as simplejson
 
-LOG_ENABLED = False
 def log(msg):
-    if LOG_ENABLED:
+    if xbmcaddon.Addon().getSetting( "logEnabled" ) == "true":
         print "DvdExtras : " + msg
 
 class MusicSettings():
@@ -72,6 +71,9 @@ class MusicSettings():
     def setRestoreVolume( self, volume ):
         log( "set restore volume %d" % volume )
         self.addon.setSetting( "restoreVolume", str( volume ) )
+        
+    def getLogEnabled(self):
+        return self.addon.getSetting( "logEnabled" ) == "true"
 
 music = MusicSettings()
 

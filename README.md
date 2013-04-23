@@ -40,11 +40,11 @@ These are the settings that I added.  It is recommended to add these settings an
 <video>
   <excludefromscan>
     <regexp>-extras-</regexp>
-    <regexp>/Extras/</regexp>
+    <regexp>[\\/]Extras[\\/]</regexp>
   </excludefromscan>
   <excludetvshowsfromscan>
     <regexp>-extras-</regexp>
-    <regexp>/Extras/</regexp>
+    <regexp>[\\/]Extras[\\/]</regexp>
   </excludetvshowsfromscan>
 </video>
 ```

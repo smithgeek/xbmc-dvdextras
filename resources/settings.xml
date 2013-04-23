@@ -3,4 +3,5 @@
    <setting id="themeMusicState" type="labelenum" visible="false" values="STOPPED|PLAYING|FADE_IN|FADE_OUT" default="STOPPED"/>
    <setting id="restoreVolume" type="label" visible="false" default="100"/>
    <setting id="themeRandomStart" type="bool" label="Choose a random starting point for theme music." default="true"/>
+   <setting id="logEnabled" type="bool" label="Turn on logging." default="false"/>
 </settings>

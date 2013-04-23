@@ -31,3 +31,6 @@ v 1.1.0
 v 1.1.1
 - Added a tool to search the movie database for files containing a given string and remove them from the database.  To help erroneous trailers and extras accidentally added to database.
 - Fixed a few bugs related to theme music playback and volume control.
+
+v 1.1.2
+- Added logging setting
