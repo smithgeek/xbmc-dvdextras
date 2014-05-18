@@ -1,3 +1,7 @@
+**This Add-on is Deprecated**
+
+Please look at http://wiki.xbmc.org/index.php?title=Add-on:VideoExtras instead.
+
 xbmc-dvdextras
 ==============
 DvdExtras is an xbmc script that provides a way to associate DVD bonus features with movies or tv shows.
